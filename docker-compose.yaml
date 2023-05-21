@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+
+  db:
+    image: postgres:latest
+    container_name: postgres-p2p
+    hostname: postgres-p2p
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+      PGTZ: Sao_Paulo/Brazil
+      TZ: Sao_Paulo/Brazil
+    ports:
+    - 5433:5432
+    volumes:
+    - postgres-p2p-volume:/var/lib/postgresql/data
+    networks:
+    - default
+volumes:
+  postgres-p2p-volume:
+    name: postgres-p2p-volume
+    driver: local
+networks:
+  default:
+    name: p2p-networks
+    driver: bridge
+
