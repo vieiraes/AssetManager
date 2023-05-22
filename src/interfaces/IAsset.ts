@@ -1,7 +1,9 @@
+import { IWallet } from "./IWallet"
+
 export interface IAsset{
-    id: string,
+    id?: string,
     ticker: string,
     balance: number,
-    createdAt: string,
-    wallet: string[]
+    createdAt?: Date | string,
+    walletId: string
 }

@@ -8,7 +8,8 @@
   "keywords": [],
   "scripts": {
     "dev": "nodemon .",
-    "migrate": "npx prisma migrate dev",
+    "db:studio": "npx prisma studio --port 5555",
+    "db:migrate": "npx prisma migrate dev",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down"
   },

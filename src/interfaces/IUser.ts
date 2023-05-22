@@ -1,7 +1,9 @@
+import { IWallet } from "./IWallet"
+
 export interface IUser {
-    id: string,
+    id?: string,
     name: string,
-    cpf: string,
-    createdAt: string
-    wallets: string
+    taxId: string,
+    createdAt?: Date | string,
+    wallets?: IWallet[]
 }

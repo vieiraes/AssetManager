@@ -1,33 +1,73 @@
 import express from 'express'
 import { Request, Response } from 'express'
-import { PrismaClient } from '@prisma/client'
-import { IUser } from '../interfaces/IUser'
+import { prisma } from '../libs/db'
 import { v4 as uuidv4 } from 'uuid';
 
+//INTERFACES
+import { IUser } from '../interfaces/IUser'
+import { IWallet } from '../interfaces/IWallet'
+import { IAsset } from '../interfaces/IAsset'
+
 const router = express.Router()
-const prisma = new PrismaClient()
+
 
 router.post('/', async (req: Request, res: Response) => {
     try {
-        const { name, cpf }: { name: string, cpf: string } = req.body
+        const { name, taxId }: { name: string, taxId: string } = req.body
+        const { setWallet }: { setWallet: boolean } = req.body
+
         let handleError = (res: Response, statusCode: number, message: string) => {
             res.status(statusCode).send({ message })
             console.error(message)
         }
-        if (!name || !cpf) {
+        if (!name || !taxId) {
             return handleError(res, 400, "some params are missing")
         }
-        let object: IUser = {
-            id: uuidv4(),
-            name: name,
-            cpf: cpf,
-            createdAt: new Date().toISOString(),
-            wallets: uuidv4()
+
+        let newUserId: string = uuidv4() as string
+        const newUser = await prisma.user.create({
+            data: {
+                id: newUserId,
+                name: name,
+                taxId: taxId,
+            }
+        })
+
+        let returnWallet
+        if (setWallet) {
+            await prisma.wallet.create({
+                data: {
+                    userId: newUserId
+                }
+            })
+            returnWallet = await prisma.wallet.findUnique({
+                where: {
+                    userId: newUserId
+                }
+            })
         }
 
-        const resolver = await prisma.user.create({ data: object })
+        const returnUser = await prisma.user.findUnique({
+            where: {
+                id: newUserId
+            }
+        })
+
+        let resolver
+        if(setWallet){
+            resolver = {
+                ...await returnUser,
+                "wallets": await returnWallet
+            }
+        }else{
+            resolver = {
+                ...await returnUser,
+            }
+        }
         res.status(201).send(resolver)
+
     } catch (error) {
+        console.error('Error', error)
         res.status(400).send({
             "message": "Error",
             error

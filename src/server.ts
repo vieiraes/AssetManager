@@ -17,7 +17,7 @@ async function bootstrap() {
         throw Error
     }
     if(server){
-        console.log(`Server is connected port: ${process.env.PORT}`)
+        console.log(`🚀 Server is connected port: ${process.env.PORT}`)
     }
 }
 
