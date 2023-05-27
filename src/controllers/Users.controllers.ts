@@ -38,7 +38,7 @@ router.post('/', async (req: Request, res: Response) => {
                     }
                 }
             })
-            returnWallet = await prisma.wallet.findUnique({
+            returnWallet = await prisma.wallet.findFirst({
                 where: {
                     userId: newUserId
                 }

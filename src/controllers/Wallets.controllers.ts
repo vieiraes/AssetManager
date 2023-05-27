@@ -37,11 +37,10 @@ router.post('/', async (req: Request, res: Response) => {
         // const assetRoot: IAsset = await prisma.asset.create({
         //     data: {
         //         id: newAssetId,
-        //         ticker: "BRL",
+        //         ticker: asset,
         //         balance: 0.00,
         //         createdAt: new Date().toISOString(),
-        //         walletId: newWalltId,
-        //         rootAsset: true
+        //         rootAsset: isRootAsset
         //     }
         // })
         // const findAsset = await prisma.asset.findUniqueOrThrow({
@@ -53,6 +52,8 @@ router.post('/', async (req: Request, res: Response) => {
         //     handleError(res, 400, 'Error creating asset')
         //     return
         // }
+
+        //FUNCIONAL
         const newWallet: IWallet = await prisma.wallet.create({
             data: {
                 id: newWalletId,
@@ -69,6 +70,29 @@ router.post('/', async (req: Request, res: Response) => {
                 }
             }
         })
+
+
+        // const newWallet: IWallet = await prisma.wallet.create({
+        //     data: {
+        //         id: newWalletId,
+        //         createdAt: new Date().toISOString(),
+        //         user: {
+        //             connect: {
+        //                 id: userId
+        //             }
+        //         },
+        //         assets: {
+        //             create: {
+        //                 id: newAssetId,
+        //                 ticker: asset,
+        //                 balance: 0.00,
+        //                 createdAt: new Date().toISOString(),
+        //                 rootAsset: isRootAsset
+        //             }
+        //         }
+        //     }
+        // })
+
 
         let assetReturn: IAsset | null = await prisma.asset.findUnique({
             where: {
