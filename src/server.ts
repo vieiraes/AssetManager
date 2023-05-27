@@ -22,6 +22,7 @@ async function bootstrap() {
 }
 
 app.use('/users', controllers.UserController)
+app.use('/wallets', controllers.WalletController)
 
 
 

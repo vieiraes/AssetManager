@@ -1,4 +1,4 @@
-import { router as UserController } from './Users'
+import { router as UserController } from './Users.controllers'
+import { router as WalletController } from './Wallets.controllers'
 
-
-export { UserController }
+export { UserController, WalletController }

@@ -3,11 +3,6 @@ import { Request, Response } from 'express'
 import { prisma } from '../libs/db'
 import { v4 as uuidv4 } from 'uuid';
 
-//INTERFACES
-import { IUser } from '../interfaces/IUser'
-import { IWallet } from '../interfaces/IWallet'
-import { IAsset } from '../interfaces/IAsset'
-
 const router = express.Router()
 
 
@@ -37,7 +32,10 @@ router.post('/', async (req: Request, res: Response) => {
         if (setWallet) {
             await prisma.wallet.create({
                 data: {
-                    userId: newUserId
+                    userId: newUserId,
+                    assets: {
+                        connectOrCreate: []
+                    }
                 }
             })
             returnWallet = await prisma.wallet.findUnique({
@@ -54,12 +52,15 @@ router.post('/', async (req: Request, res: Response) => {
         })
 
         let resolver
-        if(setWallet){
+        if (setWallet) {
             resolver = {
                 ...await returnUser,
-                "wallets": await returnWallet
+                "wallets": await {
+                    ...returnWallet,
+                    "assets": [returnWallet.assets]
+                }
             }
-        }else{
+        } else {
             resolver = {
                 ...await returnUser,
             }

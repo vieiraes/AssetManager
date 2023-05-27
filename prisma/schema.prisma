@@ -27,10 +27,15 @@ model Wallet {
 }
 
 model Asset {
-  id        String   @id @default(uuid())
-  ticker    String   @unique @db.VarChar(4)
-  balance   Decimal  @default(0.00)
-  createdAt DateTime @default(now())
-  Wallet    Wallet?  @relation(fields: [walletId], references: [id])
-  walletId  String?
+  id        String    @id @default(uuid())
+  ticker    AssetEnum @default(BRL)
+  balance   Decimal   @default(0.00)
+  createdAt DateTime  @default(now())
+  walletId  String
+  Wallet    Wallet    @relation(fields: [walletId], references: [id])
+}
+
+enum AssetEnum {
+  BRL
+  USD
 }
