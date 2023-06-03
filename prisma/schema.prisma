@@ -22,13 +22,13 @@ model Wallet {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   assets    Asset[]
-  userId    String   
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
 }
 
 model Asset {
   id        String   @id @default(uuid())
-  ticker    String
+  ticker    String   
   rootAsset Boolean  @default(false)
   balance   Decimal  @default(0.00)
   createdAt DateTime @default(now())

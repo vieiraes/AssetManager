@@ -11,6 +11,7 @@
     "db:validate": "npx prisma validate",
     "db:studio": "npx prisma studio --port 5555",
     "db:migrate": "npx prisma migrate dev",
+    "db:clear": "npx ts-node ./src/libs/utils/clearDatabase.ts",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down"
   },
@@ -20,12 +21,12 @@
     "@types/typescript": "^2.0.0",
     "gitmoji-cli": "^8.2.3",
     "nodemon": "^2.0.22",
-    "prisma": "^4.14.1",
+    "prisma": "^4.15.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@prisma/client": "^4.14.1",
+    "@prisma/client": "^4.15.0",
     "@types/uuid": "^9.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
